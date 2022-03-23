@@ -814,7 +814,7 @@
 							<div class="chargement" />
 						</div>
 					</div>
-					<div class="separateur" v-show="media === '' && progressionFichier === 0 && !chargementLien" v-if="pad.fichiers === 'actives' && pad.liens === 'actives'">
+<!-- 					<div class="separateur" v-show="media === '' && progressionFichier === 0 && !chargementLien" v-if="pad.fichiers === 'actives' && pad.liens === 'actives'">
 						<span>{{ $t('ou') }}</span>
 					</div>
 					<div id="ajouter-lien" v-show="media === '' && progressionFichier === 0" v-if="pad.liens === 'actives'">
@@ -823,7 +823,7 @@
 						<div class="conteneur-chargement" v-else>
 							<div class="chargement" />
 						</div>
-					</div>
+					</div> -->
 					<div class="separateur" v-show="media === '' && progressionFichier === 0 && !chargementLien" v-if="(pad.fichiers === 'actives' || pad.liens === 'actives') && pad.documents === 'actives'">
 						<span>{{ $t('ou') }}</span>
 					</div>
