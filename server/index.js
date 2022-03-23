@@ -39,8 +39,8 @@ if (process.env.NODE_ENV === 'production') {
 		prefix: 'sessions:'
 	}
 	cookie = {
-		sameSite: 'None',
-		secure: true
+//		sameSite: 'None',
+		secure: false
 	}
 } else {
 	storeOptions = {
