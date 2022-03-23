@@ -10,7 +10,7 @@ export const state = () => ({
 	alerte: '',
 	identifiant: '',
 	nom: '',
-	langue: 'fr',
+	langue: 'en',
 	langues: ['fr', 'es', 'it', 'hr', 'en'],
 	statut: '',
 	acces: [],
@@ -81,7 +81,7 @@ export const actions = {
 	reinitialiser ({ commit }) {
 		commit('modifierIdentifiant', '')
 		commit('modifierNom', '')
-		commit('modifierLangue', 'fr')
+		commit('modifierLangue', 'en')
 		commit('modifierStatut', '')
 		commit('modifierAffichage', 'liste')
 	}
