@@ -116,7 +116,7 @@ app.get('/p/:id/:token', function (req) {
 		db.hmset('noms:' + identifiant, 'nom', nom, function () {
 			req.session.identifiant = identifiant
 			req.session.nom = nom
-			req.session.langue = 'fr'
+			req.session.langue = 'en'
 			req.session.statut = 'invite'
 			req.session.cookie.expires = new Date(Date.now() + (3600 * 24 * 7 * 1000))
 			req.next()
@@ -135,17 +135,17 @@ app.post('/api/inscription', function (req, res) {
 			const hash = bcrypt.hashSync(motdepasse, 10)
 			const date = moment().format()
 			const multi = db.multi()
-			multi.hmset('utilisateurs:' + identifiant, 'id', identifiant, 'motdepasse', hash, 'date', date, 'nom', '', 'langue', 'fr', 'affichage', 'liste')
+			multi.hmset('utilisateurs:' + identifiant, 'id', identifiant, 'motdepasse', hash, 'date', date, 'nom', '', 'langue', 'en', 'affichage', 'liste')
 			multi.exec(function () {
 				req.session.identifiant = identifiant
 				req.session.nom = ''
 				if (req.session.langue === '' || req.session.langue === undefined) {
-					req.session.langue = 'fr'
+					req.session.langue = 'en'
 				}
 				req.session.statut = 'utilisateur'
 				req.session.affichage = 'liste'
 				req.session.cookie.expires = new Date(Date.now() + (3600 * 24 * 7 * 1000))
-				res.json({ identifiant: identifiant, nom: '', langue: 'fr', statut: 'utilisateur', affichage: 'liste' })
+				res.json({ identifiant: identifiant, nom: '', langue: 'en', statut: 'utilisateur', affichage: 'liste' })
 			})
 		} else {
 			res.send('utilisateur_existe_deja')
@@ -644,12 +644,12 @@ app.post('/api/creer-pad-sans-compte', function (req, res) {
 				const multi = db.multi()
 				multi.incr('pad')
 				multi.hmset('pads:' + id, 'id', id, 'token', token, 'titre', titre, 'identifiant', identifiant, 'motdepasse', hash, 'fond', '/img/fond1.png', 'acces', 'public', 'contributions', 'ouvertes', 'affichage', 'mur', 'registreActivite', 'active', 'conversation', 'desactivee', 'listeUtilisateurs', 'activee', 'editionNom', 'desactivee', 'fichiers', 'actives', 'liens', 'actives', 'documents', 'desactives', 'commentaires', 'desactives', 'evaluations', 'desactivees', 'ordre', 'croissant', 'date', date, 'colonnes', JSON.stringify([]), 'bloc', 0, 'activite', 0)
-				multi.hmset('utilisateurs:' + identifiant, 'id', identifiant, 'motdepasse', '', 'date', date, 'nom', nom, 'langue', 'fr')
+				multi.hmset('utilisateurs:' + identifiant, 'id', identifiant, 'motdepasse', '', 'date', date, 'nom', nom, 'langue', 'en')
 				multi.exec(function () {
 					const chemin = path.join(__dirname, '..', '/static/fichiers/' + id)
 					fs.mkdirsSync(chemin)
 					if (req.session.langue === '' || req.session.langue === undefined) {
-						req.session.langue = 'fr'
+						req.session.langue = 'en'
 					}
 					req.session.statut = 'auteur'
 					req.session.cookie.expires = new Date(Date.now() + (3600 * 24 * 7 * 1000))
@@ -660,12 +660,12 @@ app.post('/api/creer-pad-sans-compte', function (req, res) {
 			const multi = db.multi()
 			multi.incr('pad')
 			multi.hmset('pads:1', 'id', 1, 'token', token, 'titre', titre, 'identifiant', identifiant, 'motdepasse', hash, 'fond', '/img/fond1.png', 'acces', 'public', 'contributions', 'ouvertes', 'affichage', 'mur', 'registreActivite', 'active', 'conversation', 'desactivee', 'listeUtilisateurs', 'activee', 'editionNom', 'desactivee', 'fichiers', 'actives', 'liens', 'actives', 'documents', 'desactives', 'commentaires', 'desactives', 'evaluations', 'desactivees', 'ordre', 'croissant', 'date', date, 'colonnes', JSON.stringify([]), 'bloc', 0, 'activite', 0)
-			multi.hmset('utilisateurs:' + identifiant, 'id', identifiant, 'motdepasse', '', 'date', date, 'nom', nom, 'langue', 'fr')
+			multi.hmset('utilisateurs:' + identifiant, 'id', identifiant, 'motdepasse', '', 'date', date, 'nom', nom, 'langue', 'en')
 			multi.exec(function () {
 				const chemin = path.join(__dirname, '..', '/static/fichiers/1')
 				fs.mkdirsSync(chemin)
 				if (req.session.langue === '' || req.session.langue === undefined) {
-					req.session.langue = 'fr'
+					req.session.langue = 'en'
 				}
 				req.session.statut = 'auteur'
 				req.session.cookie.expires = new Date(Date.now() + (3600 * 24 * 7 * 1000))
