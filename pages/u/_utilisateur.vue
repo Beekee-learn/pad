@@ -561,14 +561,14 @@ export default {
 			}
 		},
 		afficherModaleCreerPad () {
-			if (this.padsCrees.length < this.limite) {
-				this.modaleCreerPad = true
-				this.$nextTick(function () {
-					document.querySelector('#creation input').focus()
-				})
-			} else {
-				this.$store.dispatch('modifierAlerte', this.$t('limitePad', { limite: this.limite }))
-			}
+			// if (this.padsCrees.length < this.limite) {
+			this.modaleCreerPad = true
+			this.$nextTick(function () {
+				document.querySelector('#creation input').focus()
+			})
+			// } else {
+			// 	this.$store.dispatch('modifierAlerte', this.$t('limitePad', { limite: this.limite }))
+			// }
 		},
 		creerPad () {
 			if (this.titre !== '') {
