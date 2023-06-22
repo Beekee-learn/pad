@@ -1,29 +1,30 @@
 <template>
-	<Transition name="fondu">
-		<div id="conteneur-chargement">
-			<div id="chargement">
-				<div class="spinner">
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-					<div />
-				</div>
+	<div id="conteneur-chargement" v-if="chargement">
+		<div id="chargement">
+			<div class="spinner">
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
+				<div />
 			</div>
 		</div>
-	</Transition>
+	</div>
 </template>
 
 <script>
 export default {
-	name: 'Chargement'
+	name: 'Chargement',
+	props: {
+		chargement: Boolean
+	}
 }
 </script>
 
@@ -36,8 +37,7 @@ export default {
 	bottom: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 10000;
-	background: transparent;
+	z-index: 100000;
 }
 
 #chargement {

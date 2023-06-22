@@ -1,37 +1,27 @@
 <template>
-	<div id="page">
+	<main id="page">
 		<div id="maintenance">
 			<h1>{{ $t('maintenance') }}</h1>
 			<h3>{{ $t('maintenanceDigipad') }}</h3>
 		</div>
-
-		<ChargementPage v-if="chargementPage" />
-	</div>
+	</main>
 </template>
 
 <script>
-import ChargementPage from '#root/components/chargement-page.vue'
-
 export default {
 	name: 'Maintenance',
-	components: {
-		ChargementPage
-	},
-	data () {
+	head () {
 		return {
-			chargementPage: true,
-			langue: this.$pageContext.pageProps.langue
+			title: 'Maintenance - Digipad by La Digitale'
+		}
+	},
+	computed: {
+		langue () {
+			return this.$store.state.langue
 		}
 	},
 	created () {
-		this.$i18n.locale = this.langue
-	},
-	mounted () {
-		document.getElementsByTagName('html')[0].setAttribute('lang', this.langue)
-
-		setTimeout(function () {
-			this.chargementPage = false
-		}.bind(this), 300)
+		this.$i18n.setLocale(this.langue)
 	}
 }
 </script>

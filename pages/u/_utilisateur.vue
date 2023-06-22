@@ -1,5 +1,5 @@
 <template>
-	<div id="page" v-if="identifiant !== '' && statut === 'utilisateur'">
+	<main id="page" v-if="identifiant !== '' && statut === 'utilisateur'">
 		<header>
 			<span id="conteneur-logo">
 				<span id="logo" />
@@ -114,16 +114,16 @@
 				</div>
 				<div class="pads" v-if="pads.length > 0 && requete === ''">
 					<template v-for="(pad, indexPad) in pads">
-						<div class="pad liste" v-if="affichage === 'liste'" :key="'pad_liste_' + indexPad">
+						<div class="pad liste" v-if="affichage === 'liste'" :key="'pad_' + indexPad">
 							<a class="fond" :href="'/p/' + pad.id + '/' + pad.token" :class="{'fond-personnalise': pad.fond.substring(1, 9) === 'fichiers'}" :style="definirFond(pad.fond)" />
 							<a class="meta" :class="{'pad-rejoint': pad.identifiant !== identifiant, 'deplacer': dossiers.length > 0}" :href="'/p/' + pad.id + '/' + pad.token">
 								<span class="mise-a-jour" v-if="pad.hasOwnProperty('notification') && pad.notification.includes(identifiant)" />
 								<span class="titre">{{ pad.titre }}</span>
 								<span class="date">{{ $t('creeLe') }} {{ $formaterDate(pad.date, langue) }}</span>
-								<span class="auteur" v-if="pad.identifiant !== identifiant">&nbsp;{{ $t('par') }} {{ pad.identifiant }}</span>
-								<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1"> - {{ pad.vues }} {{ $t('vues') }}</span>
-								<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2"> - {{ pad.vues }} {{ $t('vue') }}</span>
-								<span class="vues" v-else-if="!pad.hasOwnProperty('vues')"> - 0 {{ $t('vue') }}</span>
+								<span class="auteur" v-if="pad.identifiant !== identifiant">{{ $t('par') }} {{ pad.identifiant }}</span>
+								<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1">- {{ pad.vues }} {{ $t('vues') }}</span>
+								<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2">- {{ pad.vues }} {{ $t('vue') }}</span>
+								<span class="vues" v-else-if="!pad.hasOwnProperty('vues')">- 0 {{ $t('vue') }}</span>
 							</a>
 							<div class="actions" v-if="pad.identifiant === identifiant">
 								<span class="ajouter-favori" role="button" tabindex="0" @click="ajouterFavori(pad)" :title="$t('ajouterFavori')" v-if="!favoris.includes(pad.id)"><i class="material-icons">star_outline</i></span>
@@ -143,15 +143,15 @@
 							</div>
 						</div>
 
-						<div class="pad mosaique" v-else :key="'pad_mosaique_' + indexPad">
+						<div class="pad mosaique" v-else :key="'pad_' + indexPad">
 							<a class="conteneur" :class="{'fond-personnalise': pad.fond.substring(1, 9) === 'fichiers'}" :style="definirFond(pad.fond)" :href="'/p/' + pad.id + '/' + pad.token">
 								<div class="meta">
 									<span class="titre"><span class="mise-a-jour" v-if="pad.hasOwnProperty('notification') && pad.notification.includes(identifiant)" />{{ pad.titre }}</span>
 									<span class="date">{{ $t('creeLe') }} {{ $formaterDate(pad.date, langue) }}</span>
-									<span class="auteur" v-if="pad.identifiant !== identifiant">&nbsp;{{ $t('par') }} {{ pad.identifiant }}</span>
-									<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1"> - {{ pad.vues }} {{ $t('vues') }}</span>
-									<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2"> - {{ pad.vues }} {{ $t('vue') }}</span>
-									<span class="vues" v-else-if="!pad.hasOwnProperty('vues')"> - 0 {{ $t('vue') }}</span>
+									<span class="auteur" v-if="pad.identifiant !== identifiant">{{ $t('par') }} {{ pad.identifiant }}</span>
+									<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1">- {{ pad.vues }} {{ $t('vues') }}</span>
+									<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2">- {{ pad.vues }} {{ $t('vue') }}</span>
+									<span class="vues" v-else-if="!pad.hasOwnProperty('vues')">- 0 {{ $t('vue') }}</span>
 								</div>
 							</a>
 							<div class="actions" v-if="pad.identifiant === identifiant">
@@ -181,16 +181,16 @@
 				</div>
 				<div class="pads" v-else-if="resultats.length > 0 && requete !== ''">
 					<template v-for="(pad, indexPad) in resultats">
-						<div class="pad liste" v-if="affichage === 'liste'" :key="'pad_liste_' + indexPad">
+						<div class="pad liste" v-if="affichage === 'liste'" :key="'pad_' + indexPad">
 							<a class="fond" :href="'/p/' + pad.id + '/' + pad.token" :class="{'fond-personnalise': pad.fond.substring(1, 9) === 'fichiers'}" :style="definirFond(pad.fond)" />
 							<a class="meta" :class="{'pad-rejoint': pad.identifiant !== identifiant, 'deplacer': dossiers.length > 0}" :href="'/p/' + pad.id + '/' + pad.token">
 								<span class="mise-a-jour" v-if="pad.hasOwnProperty('notification') && pad.notification.includes(identifiant)" />
 								<span class="titre">{{ pad.titre }}</span>
 								<span class="date">{{ $t('creeLe') }} {{ $formaterDate(pad.date, langue) }}</span>
-								<span class="auteur" v-if="pad.identifiant !== identifiant">&nbsp;{{ $t('par') }} {{ pad.identifiant }}</span>
-								<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1"> - {{ pad.vues }} {{ $t('vues') }}</span>
-								<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2"> - {{ pad.vues }} {{ $t('vue') }}</span>
-								<span class="vues" v-else-if="!pad.hasOwnProperty('vues')"> - 0 {{ $t('vue') }}</span>
+								<span class="auteur" v-if="pad.identifiant !== identifiant">{{ $t('par') }} {{ pad.identifiant }}</span>
+								<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1">- {{ pad.vues }} {{ $t('vues') }}</span>
+								<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2">- {{ pad.vues }} {{ $t('vue') }}</span>
+								<span class="vues" v-else-if="!pad.hasOwnProperty('vues')">- 0 {{ $t('vue') }}</span>
 							</a>
 							<div class="actions" v-if="pad.identifiant === identifiant">
 								<span class="ajouter-favori" role="button" tabindex="0" @click="ajouterFavori(pad)" :title="$t('ajouterFavori')" v-if="!favoris.includes(pad.id)"><i class="material-icons">star_outline</i></span>
@@ -210,15 +210,15 @@
 							</div>
 						</div>
 
-						<div class="pad mosaique" v-else :key="'pad_mosaique_' + indexPad">
+						<div class="pad mosaique" v-else :key="'pad_' + indexPad">
 							<a class="conteneur" :class="{'fond-personnalise': pad.fond.substring(1, 9) === 'fichiers'}" :style="definirFond(pad.fond)" :href="'/p/' + pad.id + '/' + pad.token">
 								<div class="meta">
 									<span class="titre"><span class="mise-a-jour" v-if="pad.hasOwnProperty('notification') && pad.notification.includes(identifiant)" />{{ pad.titre }}</span>
 									<span class="date">{{ $t('creeLe') }} {{ $formaterDate(pad.date, langue) }}</span>
-									<span class="auteur" v-if="pad.identifiant !== identifiant">&nbsp;{{ $t('par') }} {{ pad.identifiant }}</span>
-									<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1"> - {{ pad.vues }} {{ $t('vues') }}</span>
-									<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2"> - {{ pad.vues }} {{ $t('vue') }}</span>
-									<span class="vues" v-else-if="!pad.hasOwnProperty('vues')"> - 0 {{ $t('vue') }}</span>
+									<span class="auteur" v-if="pad.identifiant !== identifiant">{{ $t('par') }} {{ pad.identifiant }}</span>
+									<span class="vues" v-if="pad.hasOwnProperty('vues') && pad.vues > 1">- {{ pad.vues }} {{ $t('vues') }}</span>
+									<span class="vues" v-else-if="pad.hasOwnProperty('vues') && pad.vues < 2">- {{ pad.vues }} {{ $t('vue') }}</span>
+									<span class="vues" v-else-if="!pad.hasOwnProperty('vues')">- 0 {{ $t('vue') }}</span>
 								</div>
 							</a>
 							<div class="actions" v-if="pad.identifiant === identifiant">
@@ -246,7 +246,7 @@
 			</div>
 		</div>
 
-		<div class="conteneur-modale" v-if="modale === 'mot-de-passe'">
+		<div class="conteneur-modale" v-if="modaleMotDePasse">
 			<div id="motdepasse" class="modale">
 				<div class="en-tete">
 					<span class="titre">{{ $t('modifierMotDePasse') }}</span>
@@ -268,7 +268,7 @@
 			</div>
 		</div>
 
-		<div class="conteneur-modale" v-else-if="modale === 'creer-pad'">
+		<div class="conteneur-modale" v-if="modaleCreerPad">
 			<div id="creation" class="modale">
 				<div class="en-tete">
 					<span class="titre">{{ $t('creerPad') }}</span>
@@ -279,17 +279,14 @@
 						<label for="champ-titre-pad">{{ $t('titrePad') }}</label>
 						<input id="champ-titre-pad" type="text" maxlength="48" :value="titre" @input="titre = $event.target.value" @keydown.enter="creerPad">
 						<div class="actions">
-							<span role="button" tabindex="0" class="bouton" @click="creerPad" v-if="!chargementModale">{{ $t('creer') }}</span>
-							<div class="conteneur-chargement" v-else>
-								<div class="chargement" />
-							</div>
+							<span role="button" tabindex="0" class="bouton" @click="creerPad">{{ $t('creer') }}</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="conteneur-modale" v-else-if="modale === 'deplacer-pad'">
+		<div class="conteneur-modale" v-else-if="modaleDeplacerPad">
 			<div id="deplacement" class="modale">
 				<div class="en-tete">
 					<span class="titre">{{ $t('ajouterDansDossier') }}</span>
@@ -315,7 +312,7 @@
 			</div>
 		</div>
 
-		<div class="conteneur-modale" v-else-if="modale === 'importer-pad'">
+		<div class="conteneur-modale" v-else-if="modaleImporterPad">
 			<div id="import" class="modale">
 				<div class="en-tete">
 					<span class="titre">{{ $t('importerPad') }}</span>
@@ -355,7 +352,7 @@
 			</div>
 		</div>
 
-		<div class="conteneur-modale" v-else-if="modale === 'ajouter-dossier'">
+		<div class="conteneur-modale" v-else-if="modaleAjouterDossier">
 			<div id="ajout-dossier" class="modale">
 				<div class="en-tete">
 					<span class="titre">{{ $t('ajouterDossier') }}</span>
@@ -373,7 +370,7 @@
 			</div>
 		</div>
 
-		<div class="conteneur-modale" v-else-if="modale === 'modifier-dossier'">
+		<div class="conteneur-modale" v-else-if="modaleModifierDossier">
 			<div id="modification-dossier" class="modale">
 				<div class="en-tete">
 					<span class="titre">{{ $t('modifierDossier') }}</span>
@@ -391,7 +388,7 @@
 			</div>
 		</div>
 
-		<div id="conteneur-message" class="conteneur-modale" v-if="modaleConfirmation !== ''">
+		<div class="conteneur-modale alerte" v-if="modaleConfirmation !== ''">
 			<div class="modale">
 				<div class="conteneur">
 					<div class="contenu">
@@ -415,48 +412,57 @@
 			</div>
 		</div>
 
-		<Notification :notification="notification" @fermer="notification = ''" v-if="notification !== ''" />
-
-		<Message :message="message" @fermer="message = ''" v-if="message !== ''" />
-
-		<Chargement v-if="chargement" />
-
-		<ChargementPage v-if="chargementPage" />
-	</div>
+		<chargement :chargement="chargement" v-if="chargement" />
+	</main>
 </template>
 
 <script>
 import axios from 'axios'
 import imagesLoaded from 'imagesloaded'
-import fileSaver from 'file-saver'
-const { saveAs } = fileSaver
-import ChargementPage from '#root/components/chargement-page.vue'
-import Chargement from '#root/components/chargement.vue'
-import Message from '#root/components/message.vue'
-import Notification from '#root/components/notification.vue'
+import saveAs from 'file-saver'
+import chargement from '../../components/chargement.vue'
 
 export default {
 	name: 'Utilisateur',
 	components: {
-		ChargementPage,
-		Chargement,
-		Message,
-		Notification
+		chargement
+	},
+	async asyncData (context) {
+		const reponse = await axios.post(context.store.state.hote + '/api/recuperer-donnees-utilisateur', {
+			identifiant: context.store.state.identifiant
+		}, {
+			headers: { 'Content-Type': 'application/json' }
+		}).catch(function () {
+			return {
+				redirection: '/'
+			}
+		})
+		if (reponse.data) {
+			return {
+				padsCrees: reponse.data.padsCrees,
+				padsRejoints: reponse.data.padsRejoints,
+				padsAdmins: reponse.data.padsAdmins,
+				padsFavoris: reponse.data.padsFavoris,
+				dossiers: reponse.data.dossiers
+			}
+		} else {
+			return {
+				redirection: '/'
+			}
+		}
 	},
 	data () {
 		return {
-			chargementPage: true,
 			chargement: false,
-			message: '',
-			notification: '',
-			modale: '',
-			modaleConfirmation: '',
-			chargementModale: false,
-			menu: false,
 			onglet: 'pads-crees',
 			titre: '',
+			menu: false,
+			modaleCreerPad: false,
+			modaleImporterPad: false,
 			progressionImport: 0,
+			modaleConfirmation: '',
 			padId: '',
+			modaleMotDePasse: false,
 			motDePasse: '',
 			nouveauMotDePasse: '',
 			confirmationNouveauMotDePasse: '',
@@ -469,23 +475,46 @@ export default {
 				evaluations: false,
 				activite: false
 			},
+			modaleAjouterDossier: false,
+			modaleModifierDossier: false,
 			dossier: '',
 			dossierId: '',
-			dossierActuel: {},
-			hote: this.$pageContext.pageProps.hote,
-			identifiant: this.$pageContext.pageProps.identifiant,
-			nom: this.$pageContext.pageProps.nom,
-			email: this.$pageContext.pageProps.email,
-			langue: this.$pageContext.pageProps.langue,
-			statut: this.$pageContext.pageProps.statut,
-			affichage: this.$pageContext.pageProps.affichage,
-			classement: this.$pageContext.pageProps.classement,
-			limite: 100,
-			padsCrees: this.$pageContext.pageProps.padsCrees,
-			padsRejoints: this.$pageContext.pageProps.padsRejoints,
-			padsAdmins: this.$pageContext.pageProps.padsAdmins,
-			padsFavoris: this.$pageContext.pageProps.padsFavoris,
-			dossiers: this.$pageContext.pageProps.dossiers
+			modaleDeplacerPad: false,
+			dossierActuel: {}
+		}
+	},
+	head () {
+		return {
+			title: this.identifiant + ' - Digipad by La Digitale'
+		}
+	},
+	computed: {
+		hote () {
+			return this.$store.state.hote
+		},
+		identifiant () {
+			return this.$store.state.identifiant
+		},
+		nom () {
+			return this.$store.state.nom
+		},
+		email () {
+			return this.$store.state.email
+		},
+		langue () {
+			return this.$store.state.langue
+		},
+		statut () {
+			return this.$store.state.statut
+		},
+		affichage () {
+			return this.$store.state.affichage
+		},
+		classement () {
+			return this.$store.state.classement
+		},
+		limite () {
+			return process.env.padLimit
 		}
 	},
 	watch: {
@@ -520,67 +549,31 @@ export default {
 			this.rechercher()
 		}
 	},
+	watchQuery: ['page'],
 	created () {
-		const params = this.$pageContext.pageProps.params
-		const langue = params.lang
-		if (langue && this.langues.includes(langue) === true) {
-			this.$i18n.locale = langue
-			this.langue = langue
-			this.$socket.emit('modifierlangue', langue)
-		} else {
-			this.$i18n.locale = this.langue
+		if (this.redirection) {
+			this.$router.replace(this.redirection)
+			return false
+		} else if (this.identifiant === '' || this.statut === 'invite') {
+			this.$router.replace('/')
+			return false
 		}
-
 		this.pads = this.padsCrees
-
 		const favoris = []
 		this.padsFavoris.forEach(function (pad) {
 			favoris.push(pad.id)
 		})
 		this.favoris = favoris
-
 		this.classer(this.classement)
-
-		if (import.meta.env.VITE_WALL_LIMIT && import.meta.env.VITE_WALL_LIMIT !== '') {
-			this.limite = parseInt(import.meta.env.VITE_WALL_LIMIT)
-		}
-
-		const observer = new PerformanceObserver((liste) => {
-			liste.getEntries().forEach(async function (entree) {
-				if (entree.type === 'back_forward') {
-					const reponse = await axios.post(this.hote + '/api/recuperer-donnees-utilisateur', {
-						identifiant: this.identifiant
-					}, {
-						headers: { 'Content-Type': 'application/json' }
-					})
-					if (reponse && reponse.hasOwnProperty('data')) {
-						this.affichage = reponse.data.affichage
-						this.classement = reponse.data.classement
-						this.padsCrees = reponse.data.padsCrees
-						this.padsRejoints = reponse.data.padsRejoints
-						this.padsAdmins = reponse.data.padsAdmins
-						this.padsFavoris = reponse.data.padsFavoris
-						this.dossiers = reponse.data.dossiers
-						this.pads = this.padsCrees
-						const favoris = []
-						this.padsFavoris.forEach(function (pad) {
-							favoris.push(pad.id)
-						})
-						this.favoris = favoris
-						this.classer(this.classement)
-					}
-				}
-			}.bind(this))
-		})
-		observer.observe({ type: 'navigation', buffered: true })
+		this.$nuxt.$loading.start()
+		this.$i18n.setLocale(this.langue)
 	},
 	mounted () {
-		document.getElementsByTagName('html')[0].setAttribute('lang', this.langue)
-
 		imagesLoaded('#pads', { background: true }, function () {
 			setTimeout(function () {
-				this.chargementPage = false
-			}.bind(this), 300)
+				this.$nuxt.$loading.finish()
+				document.getElementsByTagName('html')[0].setAttribute('lang', this.langue)
+			}.bind(this), 100)
 		}.bind(this))
 	},
 	methods: {
@@ -593,45 +586,46 @@ export default {
 		},
 		afficherModaleCreerPad () {
 			if (this.padsCrees.length < this.limite) {
-				this.modale = 'creer-pad'
+				this.modaleCreerPad = true
 				this.$nextTick(function () {
 					document.querySelector('#creation input').focus()
 				})
 			} else {
-				this.message = this.$t('limitePad', { limite: this.limite })
+				this.$store.dispatch('modifierAlerte', this.$t('limitePad', { limite: this.limite }))
 			}
 		},
 		creerPad () {
 			if (this.titre !== '') {
-				this.chargementModale = true
+				this.chargement = true
+				this.modaleCreerPad = false
 				axios.post(this.hote + '/api/creer-pad', {
 					titre: this.titre,
 					identifiant: this.identifiant
 				}).then(function (reponse) {
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else if (donnees === 'erreur_creation') {
-						this.chargementModale = true
-						this.message = this.$t('erreurCreationPad')
+						this.chargement = false
+						this.$store.dispatch('modifierAlerte', this.$t('erreurCreationPad'))
 					} else {
 						window.location.href = '/p/' + donnees.id + '/' + donnees.token
 					}
 				}.bind(this)).catch(function () {
-					this.chargementModale = true
-					this.message = this.$t('erreurCommunicationServeur')
+					this.chargement = false
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
 		fermerModaleCreerPad () {
-			this.modale = ''
+			this.modaleCreerPad = false
 			this.titre = ''
 		},
 		afficherModaleImporterPad () {
 			if (this.padsCrees.length < this.limite) {
-				this.modale = 'importer-pad'
+				this.modaleImporterPad = true
 			} else {
-				this.message = this.$t('limitePad', { limite: this.limite })
+				this.$store.dispatch('modifierAlerte', this.$t('limitePad', { limite: this.limite }))
 			}
 		},
 		modifierParametresImport (event, type) {
@@ -656,27 +650,27 @@ export default {
 					this.fermerModaleImporterPad()
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else if (donnees === 'erreur_import') {
-						this.message = this.$t('erreurImportPad')
+						this.$store.dispatch('modifierAlerte', this.$t('erreurImportPad'))
 					} else if (donnees === 'donnees_corrompues') {
-						this.message = this.$t('donneesCorrompuesImportPad')
+						this.$store.dispatch('modifierAlerte', this.$t('donneesCorrompuesImportPad'))
 					} else {
 						this.onglet = 'pads-crees'
 						this.padsCrees.push(donnees)
-						this.notification = this.$t('padImporte')
+						this.$store.dispatch('modifierMessage', this.$t('padImporte'))
 					}
 				}.bind(this)).catch(function () {
 					this.fermerModaleImporterPad()
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			} else {
-				this.message = this.$t('formatFichierPasAccepte')
+				this.$store.dispatch('modifierAlerte', this.$t('formatFichierPasAccepte'))
 				champ.value = ''
 			}
 		},
 		fermerModaleImporterPad () {
-			this.modale = ''
+			this.modaleImporterPad = false
 			this.parametresImport.commentaires = false
 			this.parametresImport.evaluations = false
 			this.parametresImport.activite = false
@@ -709,17 +703,17 @@ export default {
 				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'non_connecte') {
-					window.location.replace('/')
+					this.$router.replace('/')
 				} else if (donnees === 'erreur_ajout_favori') {
-					this.message = this.$t('erreurAjoutFavoris')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurAjoutFavoris'))
 				} else {
 					this.padsFavoris.push(pad)
 					this.favoris.push(pad.id)
-					this.notification = this.$t('padAjouteFavoris')
+					this.$store.dispatch('modifierMessage', this.$t('padAjouteFavoris'))
 				}
 			}.bind(this)).catch(function () {
 				this.chargement = false
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		supprimerFavori (padId) {
@@ -731,9 +725,9 @@ export default {
 				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'non_connecte') {
-					window.location.replace('/')
+					this.$router.replace('/')
 				} else if (donnees === 'erreur_suppression_favori') {
-					this.message = this.$t('erreurSuppressionFavoris')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurSuppressionFavoris'))
 				} else {
 					this.padsFavoris.forEach(function (pad, indexPad) {
 						if (pad.id === padId) {
@@ -757,11 +751,11 @@ export default {
 							}
 						}.bind(this))
 					}
-					this.notification = this.$t('padSupprimeFavoris')
+					this.$store.dispatch('modifierMessage', this.$t('padSupprimeFavoris'))
 				}
 			}.bind(this)).catch(function () {
 				this.chargement = false
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		verifierDossierPad (padId) {
@@ -782,13 +776,13 @@ export default {
 				}
 			}.bind(this))
 			this.dossierActuel = dossierActuel
-			this.modale = 'deplacer-pad'
+			this.modaleDeplacerPad = true
 		},
 		deplacerPad () {
 			const destination = document.querySelector('#champ-dossier-pad').value
 			if (destination !== this.dossierActuel.id) {
 				this.chargement = true
-				this.modale = ''
+				this.modaleDeplacerPad = false
 				axios.post(this.hote + '/api/deplacer-pad', {
 					padId: this.padId,
 					destination: destination,
@@ -797,9 +791,9 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else if (donnees === 'erreur_deplacement') {
-						this.message = this.$t('erreurDeplacementPad')
+						this.$store.dispatch('modifierAlerte', this.$t('erreurDeplacementPad'))
 					} else {
 						this.dossiers.forEach(function (dossier, indexDossier) {
 							if (dossier.pads.includes(this.padId)) {
@@ -817,18 +811,18 @@ export default {
 								}
 							}.bind(this))
 						}
-						this.notification = this.$t('padDeplace')
+						this.$store.dispatch('modifierMessage', this.$t('padDeplace'))
 						this.fermerModaleDeplacerPad()
 					}
 				}.bind(this)).catch(function () {
 					this.chargement = false
 					this.fermerModaleDeplacerPad()
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
 		fermerModaleDeplacerPad () {
-			this.modale = ''
+			this.modaleDeplacerPad = false
 			this.padId = ''
 			this.dossierActuel = {}
 		},
@@ -842,19 +836,19 @@ export default {
 				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'non_connecte') {
-					window.location.replace('/')
+					this.$router.replace('/')
 				} else if (donnees === 'erreur_duplication') {
-					this.message = this.$t('erreurDuplicationPad')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurDuplicationPad'))
 				} else {
 					this.padsCrees.push(donnees)
-					this.notification = this.$t('padDuplique')
+					this.$store.dispatch('modifierMessage', this.$t('padDuplique'))
 					this.padId = ''
 					this.onglet = 'pads-crees'
 				}
 			}.bind(this)).catch(function () {
 				this.chargement = false
 				this.padId = ''
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		exporterPad () {
@@ -868,9 +862,9 @@ export default {
 				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'non_connecte') {
-					window.location.replace('/')
+					this.$router.replace('/')
 				} else if (donnees === 'erreur_export') {
-					this.message = this.$t('erreurExportPad')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurExportPad'))
 				} else {
 					saveAs('/temp/' + donnees, 'pad-' + this.padId + '.zip')
 				}
@@ -878,7 +872,7 @@ export default {
 			}.bind(this)).catch(function () {
 				this.chargement = false
 				this.padId = ''
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		supprimerPad () {
@@ -894,9 +888,9 @@ export default {
 				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'non_connecte') {
-					window.location.replace('/')
+					this.$router.replace('/')
 				} else if (donnees === 'erreur_suppression') {
-					this.message = this.$t('erreurSuppressionPad')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurSuppressionPad'))
 				} else {
 					this.padsCrees.forEach(function (pad, index) {
 						if (pad.id === this.padId) {
@@ -939,13 +933,13 @@ export default {
 							this.dossiers[indexDossier].pads.splice(indexPad, 1)
 						}
 					}.bind(this))
-					this.notification = this.$t('padSupprime')
+					this.$store.dispatch('modifierMessage', this.$t('padSupprime'))
 					this.padId = ''
 				}
 			}.bind(this)).catch(function () {
 				this.chargement = false
 				this.padId = ''
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		definirTypePad (padId) {
@@ -1026,15 +1020,15 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else {
 						this.classer(classement)
-						this.classement = classement
-						this.notification = this.$t('classementModifie')
+						this.$store.dispatch('modifierClassement', classement)
+						this.$store.dispatch('modifierMessage', this.$t('classementModifie'))
 					}
 				}.bind(this)).catch(function () {
 					this.chargement = false
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
@@ -1043,7 +1037,7 @@ export default {
 			const email = document.querySelector('#email').value.trim()
 			if ((nom !== '' && nom !== this.nom) || (email !== '' && email !== this.email)) {
 				if (email !== '' && this.$verifierEmail(email) === false) {
-					this.message = this.$t('erreurEmail')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurEmail'))
 					return false
 				}
 				this.menu = false
@@ -1056,31 +1050,27 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else {
-						this.nom = nom
-						this.email = email
-						this.notification = this.$t('informationsModifiees')
+						this.$store.dispatch('modifierInformations', { nom: nom, email: email })
+						this.$store.dispatch('modifierMessage', this.$t('informationsModifiees'))
 					}
 				}.bind(this)).catch(function () {
 					this.chargement = false
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
 		afficherModaleMotDePasse () {
 			this.menu = false
-			this.modale = 'mot-de-passe'
-			this.$nextTick(function () {
-				document.querySelector('#champ-motdepasse-actuel').focus()
-			})
+			this.modaleMotDePasse = true
 		},
 		modifierMotDePasse () {
 			const motDePasse = this.motDePasse
 			const nouveauMotDePasse = this.nouveauMotDePasse.trim()
 			const confirmationNouveauMotDePasse = this.confirmationNouveauMotDePasse.trim()
 			if (nouveauMotDePasse === confirmationNouveauMotDePasse && nouveauMotDePasse !== '') {
-				this.modale = ''
+				this.modaleMotDePasse = false
 				this.chargement = true
 				axios.post(this.hote + '/api/modifier-mot-de-passe', {
 					identifiant: this.identifiant,
@@ -1090,26 +1080,26 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else if (donnees === 'motdepasse_incorrect') {
-						this.message = this.$t('motDePasseActuelPasCorrect')
+						this.$store.dispatch('modifierAlerte', this.$t('motDePasseActuelPasCorrect'))
 					} else if (donnees === 'erreur') {
-						this.message = this.$t('erreurCommunicationServeur')
+						this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 					} else {
-						this.notification = this.$t('motDePasseModifie')
+						this.$store.dispatch('modifierMessage', this.$t('motDePasseModifie'))
 					}
 					this.fermerModaleMotDePasse()
 				}.bind(this)).catch(function () {
 					this.chargement = false
 					this.fermerModaleMotDePasse()
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			} else if (nouveauMotDePasse !== confirmationNouveauMotDePasse) {
-				this.message = this.$t('nouveauxMotsDePasseCorrespondentPas')
+				this.$store.dispatch('modifierAlerte', this.$t('nouveauxMotsDePasseCorrespondentPas'))
 			}
 		},
 		fermerModaleMotDePasse () {
-			this.modale = ''
+			this.modaleMotDePasse = false
 			this.motDePasse = ''
 			this.nouveauMotDePasse = ''
 			this.confirmationNouveauMotDePasse = ''
@@ -1122,15 +1112,15 @@ export default {
 				}).then(function (reponse) {
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else {
-						this.$i18n.locale = langue
+						this.$i18n.setLocale(langue)
 						document.getElementsByTagName('html')[0].setAttribute('lang', langue)
-						this.langue = langue
-						this.notification = this.$t('langueModifiee')
+						this.$store.dispatch('modifierLangue', langue)
+						this.$store.dispatch('modifierMessage', this.$t('langueModifiee'))
 					}
 				}.bind(this)).catch(function () {
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
@@ -1144,26 +1134,26 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else {
-						this.affichage = affichage
-						this.notification = this.$t('affichageModifie')
+						this.$store.dispatch('modifierAffichage', affichage)
+						this.$store.dispatch('modifierMessage', this.$t('affichageModifie'))
 					}
 				}.bind(this)).catch(function () {
 					this.chargement = false
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
 		afficherModaleAjouterDossier () {
-			this.modale = 'ajouter-dossier'
+			this.modaleAjouterDossier = true
 			this.$nextTick(function () {
 				document.querySelector('#ajout-dossier input').focus()
 			})
 		},
 		ajouterDossier () {
 			if (this.dossier !== '') {
-				this.modale = ''
+				this.modaleAjouterDossier = false
 				this.chargement = true
 				axios.post(this.hote + '/api/ajouter-dossier', {
 					dossier: this.dossier,
@@ -1172,23 +1162,23 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else if (donnees === 'erreur_ajout_dossier') {
-						this.message = this.$t('erreurAjoutDossier')
+						this.$store.dispatch('modifierAlerte', this.$t('erreurAjoutDossier'))
 					} else {
 						this.dossiers.push(donnees)
-						this.notification = this.$t('dossierAjoute')
+						this.$store.dispatch('modifierMessage', this.$t('dossierAjoute'))
 					}
 					this.dossier = ''
 				}.bind(this)).catch(function () {
 					this.chargement = false
 					this.dossier = ''
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
 		fermerModaleAjouterDossier () {
-			this.modale = ''
+			this.modaleAjouterDossier = false
 			this.dossier = ''
 		},
 		afficherModaleModifierDossier (event, id) {
@@ -1200,14 +1190,14 @@ export default {
 				}
 			}.bind(this))
 			this.dossierId = id
-			this.modale = 'modifier-dossier'
+			this.modaleModifierDossier = true
 			this.$nextTick(function () {
 				document.querySelector('#modification-dossier input').focus()
 			})
 		},
 		modifierDossier () {
 			if (this.dossier !== '') {
-				this.modale = ''
+				this.modaleModifierDossier = false
 				this.chargement = true
 				axios.post(this.hote + '/api/modifier-dossier', {
 					dossier: this.dossier,
@@ -1217,27 +1207,27 @@ export default {
 					this.chargement = false
 					const donnees = reponse.data
 					if (donnees === 'non_connecte') {
-						window.location.replace('/')
+						this.$router.replace('/')
 					} else if (donnees === 'erreur_modification_dossier') {
-						this.message = this.$t('erreurModificationDossier')
+						this.$store.dispatch('modifierAlerte', this.$t('erreurModificationDossier'))
 					} else {
 						this.dossiers.forEach(function (dossier, index) {
 							if (dossier.id === this.dossierId) {
 								this.dossiers[index].nom = this.dossier
 							}
 						}.bind(this))
-						this.notification = this.$t('dossierModifie')
+						this.$store.dispatch('modifierMessage', this.$t('dossierModifie'))
 					}
 					this.fermerModaleModifierDossier()
 				}.bind(this)).catch(function () {
 					this.chargement = false
 					this.fermerModaleModifierDossier()
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				}.bind(this))
 			}
 		},
 		fermerModaleModifierDossier () {
-			this.modale = ''
+			this.modaleModifierDossier = false
 			this.dossier = ''
 			this.dossierId = ''
 		},
@@ -1251,9 +1241,9 @@ export default {
 				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'non_connecte') {
-					window.location.replace('/')
+					this.$router.replace('/')
 				} else if (donnees === 'erreur_suppression_dossier') {
-					this.message = this.$t('erreurSuppressionDossier')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurSuppressionDossier'))
 				} else {
 					this.dossiers.forEach(function (dossier, index) {
 						if (dossier.id === this.dossierId) {
@@ -1261,45 +1251,44 @@ export default {
 						}
 					}.bind(this))
 					this.onglet = 'pads-crees'
-					this.notification = this.$t('dossierSupprime')
+					this.$store.dispatch('modifierMessage', this.$t('dossierSupprime'))
 					this.dossierId = ''
 				}
 			}.bind(this)).catch(function () {
 				this.chargement = false
 				this.dossierId = ''
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		supprimerCompte () {
 			this.chargement = true
-			this.modaleConfirmation = ''
 			const identifiant = this.identifiant
 			axios.post(this.hote + '/api/supprimer-compte', {
 				identifiant: identifiant,
 				admin: ''
 			}).then(function (reponse) {
+				this.chargement = false
 				const donnees = reponse.data
 				if (donnees === 'erreur') {
-					this.chargement = false
-					this.message = this.$t('erreurCommunicationServeur')
+					this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 				} else {
 					this.$socket.emit('deconnexion', identifiant)
-					window.location.replace('/')
+					this.$store.dispatch('reinitialiser')
+					this.$router.replace('/')
 				}
 			}.bind(this)).catch(function () {
 				this.chargement = false
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		},
 		deconnexion () {
-			this.chargement = true
 			const identifiant = this.identifiant
 			axios.post(this.hote + '/api/deconnexion').then(function () {
 				this.$socket.emit('deconnexion', identifiant)
-				window.location.replace('/')
+				this.$store.dispatch('reinitialiser')
+				this.$router.replace('/')
 			}.bind(this)).catch(function () {
-				this.chargement = false
-				this.message = this.$t('erreurCommunicationServeur')
+				this.$store.dispatch('modifierAlerte', this.$t('erreurCommunicationServeur'))
 			}.bind(this))
 		}
 	}
@@ -1461,7 +1450,6 @@ export default {
 }
 
 #onglets .onglet > span {
-	margin-right: 0.7rem;
 	vertical-align: middle;
 }
 
@@ -1470,7 +1458,6 @@ export default {
 	width: 2rem;
 	height: 2rem;
 	background: #e32f6c;
-	margin-right: 0;
 	border-radius: 50%;
 	font-size: 1.2rem;
 	color: #fff;
@@ -1646,7 +1633,6 @@ export default {
 .pad.liste .titre {
 	font-size: 1.8rem;
 	font-weight: 700;
-	margin-right: 0.7rem;
 }
 
 .pad.liste .vues,
@@ -1737,10 +1723,6 @@ export default {
     display: inline-block;
 }
 
-.pad.mosaique .vues {
-	margin-left: 0.35rem;
-}
-
 .pad.mosaique .actions {
 	position: absolute;
 	display: flex;
@@ -1779,7 +1761,6 @@ export default {
 	display: inline-block;
 	border-radius: 50%;
 	background: #e32f6c;
-	margin-right: 0.7rem;
 }
 
 .pad.mosaique .mise-a-jour {
